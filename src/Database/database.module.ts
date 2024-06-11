@@ -19,9 +19,10 @@ import { UserEntity } from "src/Entities/user.entity";
         password: configService.getOrThrow('DB_PASSWORD'),
         database: configService.getOrThrow('DB_NAME'),
         entities: [UserEntity],
+        autoLoadEntities: true,
         synchronize: false,
-        }), 
-        inject : [ConfigService],
+        }),   
+        inject : [ConfigService],  
       })
     ],
   })
