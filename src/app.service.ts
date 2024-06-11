@@ -9,10 +9,14 @@ export class AppService {
   constructor(@InjectRepository(UserEntity) private userRepo:Repository<UserEntity>){}
 
   async createUser(payload:createUserDto){
-    const user = this.userRepo.create(payload)
-    return this.userRepo.save(user)
-
+    const user = await this.userRepo.create(payload);
+    return await this.userRepo.save(user)
   }
-  
+
+  LoginUser(payload){
+    
+  }
+
+
 }
  

@@ -7,8 +7,5 @@ import { createUserDto } from './Dtos/create.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('createUser')
-  createUser(@Body() payload:createUserDto){
-    return this.appService.createUser(payload)
-  }
+
 }
