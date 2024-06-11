@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserEntity } from './Entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -17,6 +17,9 @@ export class AppService {
   async LoginUser(payload:LoginUserDto){
     const {email, password } = payload
     const isUser = await this.userRepo.findOne({where:{email}})
+    if (!isUser){
+      throw new HttpException('User With this email does not exist', 404)
+    }
     if (isUser.password != password ){
       throw new UnauthorizedException('Wrong password')
     }
