@@ -38,11 +38,13 @@ export class AppService {
     if (!isUser) {
       throw new HttpException('User With this email does not exist', 404);
     }
-    if (isUser.password != password) {
+    const passwordMatch = await bcrypt.compare(password, isUser.password)
+    if (!passwordMatch) {
       throw new UnauthorizedException('Wrong password');
     }
-    return {
-      message: `${isUser.usernname} Logged in Successfully`,
-    };
+    return  {
+      message :`Logged in Successfully`,
+      userDetails:isUser
+    }
   }
 }
