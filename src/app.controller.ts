@@ -8,7 +8,7 @@ import { LoginUserDto } from './Dtos/Login.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('NewUser')
+  @Post('createUser')
   async createUser(@Body() payload:createUserDto){
     return await this.appService.createUser(payload)
   }
