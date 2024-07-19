@@ -21,7 +21,7 @@ import { UserEntity } from "src/Entities/user.entity";
         entities: [UserEntity],
         autoLoadEntities: true,
         synchronize: false,
-        }),   
+        }),    
         inject : [ConfigService],  
       })
     ],

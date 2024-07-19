@@ -10,11 +10,13 @@ import { Repository } from 'typeorm';
 import { createUserDto } from './Dtos/create.dto';
 import { LoginUserDto } from './Dtos/Login.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
+    private readonly jwtService:JwtService
   ) {}
 
   async createUser(payload: createUserDto) {
@@ -42,9 +44,11 @@ export class AppService {
     if (!passwordMatch) {
       throw new UnauthorizedException('Wrong password');
     }
+    const token = await this.jwtService.signAsync(payload)
     return  {
       message :`Logged in Successfully`,
-      userDetails:isUser
+      userDetails:isUser,
+      userToken: token
     }
   }
 }
