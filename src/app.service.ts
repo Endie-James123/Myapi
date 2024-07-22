@@ -16,13 +16,13 @@ import { JwtService } from '@nestjs/jwt';
 export class AppService {
   constructor(
     @InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
-    private readonly jwtService:JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   //Logic to create new user
   async createUser(payload: createUserDto) {
-    const { email, password, ...remainder } = payload;
-    const isUser = await this.userRepo.findOne({ where: { email } });
+    const { email, password, ...remainder } = payload; //Destructuring payload
+    const isUser = await this.userRepo.findOne({ where: { email } }); //checking if email already exist in database
     if (isUser) {
       throw new HttpException('User with this email already exist', 400);
     }
@@ -38,18 +38,18 @@ export class AppService {
   async LoginUser(payload: LoginUserDto) {
     const { email, password } = payload;
     const isUser = await this.userRepo.findOne({ where: { email } });
-    if (!isUser) {  
+    if (!isUser) {
       throw new HttpException('User With this email does not exist', 404);
     }
-    const passwordMatch = await bcrypt.compare(password, isUser.password)
+    const passwordMatch = await bcrypt.compare(password, isUser.password);
     if (!passwordMatch) {
       throw new UnauthorizedException('Wrong password');
     }
-    const token = await this.jwtService.signAsync(payload)
-    return  {
-      message :`Logged in Successfully`,
-      userDetails:isUser,
-      userToken: token
-    }
+    const token = await this.jwtService.signAsync(payload);
+    return {
+      message: `Logged in Successfully`,
+      userDetails: isUser,
+      userToken: token,
+    };
   }
 }
