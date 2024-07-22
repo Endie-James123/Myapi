@@ -37,7 +37,7 @@ export class AppService {
 
   //Route to Login already existing user
   async LoginUser(payload: LoginUserDto) {
-    const { email, password } = payload;
+    const { email, password } = payload;//Destructuring payload
     const isUser = await this.userRepo.findOne({ where: { email } });
     if (!isUser) {
       throw new HttpException('User With this email does not exist', 404);
