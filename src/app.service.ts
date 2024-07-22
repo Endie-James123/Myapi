@@ -29,8 +29,8 @@ export class AppService {
     const hashPassword = await bcrypt.hash(password, 10);//Declare variable to store hashedPassword
     const user = await this.userRepo.create({//create user with...
       email,//this email
-      password: hashPassword,//
-      ...remainder,
+      password: hashPassword,//Assign hashed password to user's password
+      ...remainder,//remaining stuffs in the payload
     });
     return await this.userRepo.save(user);
   }
