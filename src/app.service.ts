@@ -32,7 +32,7 @@ export class AppService {
       password: hashPassword,//Assign hashed password to user's password
       ...remainder,//remaining stuffs in the payload
     });
-    return await this.userRepo.save(user);
+    return await this.userRepo.save(user);//Finally return created user
   }
 
   async LoginUser(payload: LoginUserDto) {
