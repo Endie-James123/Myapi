@@ -23,13 +23,13 @@ export class AppService {
   async createUser(payload: createUserDto) {
     const { email, password, ...remainder } = payload; //Destructuring payload
     const isUser = await this.userRepo.findOne({ where: { email } }); //checking if email already exist in database
-    if (isUser) {
-      throw new HttpException('User with this email already exist', 400);
-    }
-    const hashPassword = await bcrypt.hash(password, 10);
-    const user = await this.userRepo.create({
-      email,
-      password: hashPassword,
+    if (isUser) {//If email exist in database......
+      throw new HttpException('User with this email already exist', 400);//Throw HttpException
+    }//else.....
+    const hashPassword = await bcrypt.hash(password, 10);//Declare variable to store hashedPassword
+    const user = await this.userRepo.create({//create user with...
+      email,//this email
+      password: hashPassword,//
       ...remainder,
     });
     return await this.userRepo.save(user);
