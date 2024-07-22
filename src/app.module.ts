@@ -11,7 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     ConfigModule.forRoot({  
-      isGlobal: true, 
+      isGlobal: true, //Setting configModule to be global
     }),
     TypeOrmModule.forFeature([UserEntity]),
     DatabaseModule,
