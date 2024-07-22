@@ -35,6 +35,7 @@ export class AppService {
     return await this.userRepo.save(user);//Finally return created user
   }
 
+  //Route to Login already existing user
   async LoginUser(payload: LoginUserDto) {
     const { email, password } = payload;
     const isUser = await this.userRepo.findOne({ where: { email } });
