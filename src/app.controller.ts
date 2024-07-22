@@ -14,6 +14,7 @@ export class AppController {
     return await this.appService.createUser(payload)
   }
 
+  //Route to login already existing user
   @Post('LoginUser')
   async Login(@Body() payload:LoginUserDto){
     return await this.appService.LoginUser(payload)
