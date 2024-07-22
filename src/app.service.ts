@@ -38,19 +38,19 @@ export class AppService {
   //Route to Login already existing user
   async LoginUser(payload: LoginUserDto) {
     const { email, password } = payload;//Destructuring payload
-    const isUser = await this.userRepo.findOne({ where: { email } });
-    if (!isUser) {
-      throw new HttpException('User With this email does not exist', 404);
+    const isUser = await this.userRepo.findOne({ where: { email } });//Look for the user's email in the database
+    if (!isUser) {//If it doesn't exist.....
+      throw new HttpException('User With this email does not exist', 404);//Throw HttpException
+    }//else.....
+    const passwordMatch = await bcrypt.compare(password, isUser.password);//Use Bcrypt to compare user's password
+    if (!passwordMatch) {//If it doesn't matches.....
+      throw new UnauthorizedException('Wrong password');//Through Unauthorised exception
     }
-    const passwordMatch = await bcrypt.compare(password, isUser.password);
-    if (!passwordMatch) {
-      throw new UnauthorizedException('Wrong password');
-    }
-    const token = await this.jwtService.signAsync(payload);
+    const token = await this.jwtService.signAsync(payload);//Generate Jwt token and assign it to user's payload
     return {
-      message: `Logged in Successfully`,
-      userDetails: isUser,
-      userToken: token,
+      message: `Logged in Successfully`,//Message to return
+      userDetails: isUser,//Return user details
+      userToken: token,//Also return user's token
     };
   }
 }
