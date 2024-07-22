@@ -22,3 +22,6 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [AppService],
 })
 export class AppModule {}
+/* A JSON Web token (JWT) is simply a small, secure token used to verify a user's
+identity. It contains 3 parts, the header, the payload with the users information,
+and a signature to ensure the tokens integrity or validity */

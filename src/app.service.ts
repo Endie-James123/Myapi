@@ -37,7 +37,7 @@ export class AppService {
   async LoginUser(payload: LoginUserDto) {
     const { email, password } = payload;
     const isUser = await this.userRepo.findOne({ where: { email } });
-    if (!isUser) {
+    if (!isUser) {  
       throw new HttpException('User With this email does not exist', 404);
     }
     const passwordMatch = await bcrypt.compare(password, isUser.password)
