@@ -19,6 +19,7 @@ export class AppService {
     private readonly jwtService:JwtService
   ) {}
 
+  //Logic to create new user
   async createUser(payload: createUserDto) {
     const { email, password, ...remainder } = payload;
     const isUser = await this.userRepo.findOne({ where: { email } });
